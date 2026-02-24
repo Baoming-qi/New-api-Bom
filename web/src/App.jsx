@@ -34,6 +34,7 @@ import PasswordResetConfirm from './components/auth/PasswordResetConfirm';
 import Channel from './pages/Channel';
 import Token from './pages/Token';
 import Redemption from './pages/Redemption';
+import InviteCodePage from './pages/InviteCode';
 import TopUp from './pages/TopUp';
 import Log from './pages/Log';
 import Chat from './pages/Chat';
@@ -155,6 +156,14 @@ function App() {
           element={
             <AdminRoute>
               <Redemption />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/console/invite-code'
+          element={
+            <AdminRoute>
+              <InviteCodePage />
             </AdminRoute>
           }
         />

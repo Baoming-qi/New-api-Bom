@@ -86,6 +86,7 @@ const NotificationSettings = ({
       channel: true,
       models: true,
       deployment: true,
+      invite_code: true,
       redemption: true,
       user: true,
       setting: true,
@@ -169,6 +170,7 @@ const NotificationSettings = ({
         channel: true,
         models: true,
         deployment: true,
+        invite_code: true,
         redemption: true,
         user: true,
         setting: true,
@@ -295,6 +297,11 @@ const NotificationSettings = ({
           key: 'deployment',
           title: t('模型部署'),
           description: t('模型部署管理'),
+        },
+        {
+          key: 'invite_code',
+          title: t('邀请码管理'),
+          description: t('邀请码生成管理'),
         },
         {
           key: 'redemption',

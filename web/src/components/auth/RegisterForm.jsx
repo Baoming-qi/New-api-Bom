@@ -78,8 +78,9 @@ const RegisterForm = () => {
     email: '',
     verification_code: '',
     wechat_verification_code: '',
+    invite_code: '',
   });
-  const { username, password, password2 } = inputs;
+  const { username, password, password2, invite_code } = inputs;
   const [userState, userDispatch] = useContext(UserContext);
   const [statusState] = useContext(StatusContext);
   const [turnstileEnabled, setTurnstileEnabled] = useState(false);
@@ -208,6 +209,10 @@ const RegisterForm = () => {
     }
     if (password !== password2) {
       showInfo('两次输入的密码不一致');
+      return;
+    }
+    if (status?.invite_code_required && !invite_code?.trim()) {
+      showInfo('请输入邀请码！');
       return;
     }
     if (username && password) {
@@ -548,6 +553,15 @@ const RegisterForm = () => {
                   mode='password'
                   onChange={(value) => handleChange('password', value)}
                   prefix={<IconLock />}
+                />
+
+                <Form.Input
+                  field='invite_code'
+                  label={t('邀请码')}
+                  placeholder={t('请输入邀请码')}
+                  name='invite_code'
+                  onChange={(value) => handleChange('invite_code', value)}
+                  prefix={<IconKey />}
                 />
 
                 <Form.Input

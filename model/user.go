@@ -31,7 +31,8 @@ type User struct {
 	OidcId           string         `json:"oidc_id" gorm:"column:oidc_id;index"`
 	WeChatId         string         `json:"wechat_id" gorm:"column:wechat_id;index"`
 	TelegramId       string         `json:"telegram_id" gorm:"column:telegram_id;index"`
-	VerificationCode string         `json:"verification_code" gorm:"-:all"`                                    // this field is only for Email verification, don't save it to database!
+	VerificationCode string         `json:"verification_code" gorm:"-:all"` // this field is only for Email verification, don't save it to database!
+	InviteCode       string         `json:"invite_code" gorm:"-:all"`
 	AccessToken      *string        `json:"access_token" gorm:"type:char(32);column:access_token;uniqueIndex"` // this token is for system management
 	Quota            int            `json:"quota" gorm:"type:int;default:0"`
 	UsedQuota        int            `json:"used_quota" gorm:"type:int;default:0;column:used_quota"` // used quota
@@ -125,22 +126,24 @@ func generateDefaultSidebarConfigForRole(userRole int) string {
 	if userRole == common.RoleAdminUser {
 		// 管理员可以访问管理员区域，但不能访问系统设置
 		defaultConfig["admin"] = map[string]interface{}{
-			"enabled":    true,
-			"channel":    true,
-			"models":     true,
-			"redemption": true,
-			"user":       true,
-			"setting":    false, // 管理员不能访问系统设置
+			"enabled":     true,
+			"channel":     true,
+			"models":      true,
+			"invite_code": true,
+			"redemption":  true,
+			"user":        true,
+			"setting":     false, // 管理员不能访问系统设置
 		}
 	} else if userRole == common.RoleRootUser {
 		// 超级管理员可以访问所有功能
 		defaultConfig["admin"] = map[string]interface{}{
-			"enabled":    true,
-			"channel":    true,
-			"models":     true,
-			"redemption": true,
-			"user":       true,
-			"setting":    true,
+			"enabled":     true,
+			"channel":     true,
+			"models":      true,
+			"invite_code": true,
+			"redemption":  true,
+			"user":        true,
+			"setting":     true,
 		}
 	}
 	// 普通用户不包含admin区域
